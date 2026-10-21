@@ -1,6 +1,6 @@
 @dump(session('cart'))
 
-@if(!empty(session('cart')))
+@if (!empty(session('cart')))
     <div class="table-responsive">
         <table class="table table-hover">
             <thead>
@@ -12,23 +12,26 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(session('cart') as $item)
-                <tr>
-                    <td>
-                        <a href="{{ route('products.show', ['slug' => $item['slug']]) }}">
-                            <img src="{{ $item['img'] }}" alt="{{ $item['title'] }}">
-                        </a>
-                    </td>
-                    <td><a href="{{ route('products.show', ['slug' => $item['slug']]) }}">{{ $item['title'] }}</a></td>
-                    <td>{{ $item['price'] }}</td>
-                    <td>{{ $item['qty'] }}</td>
-                </tr>
+                @foreach (session('cart') as $item)
+                    <tr>
+                        <td>
+                            <a href="{{ route('products.show', ['slug' => $item['slug']]) }}">
+                                <img src="{{ $item['img'] }}" alt="{{ $item['title'] }}">
+                            </a>
+                        </td>
+                        <td><a href="{{ route('products.show', ['slug' => $item['slug']]) }}">{{ $item['title'] }}</a>
+                        </td>
+                        <td>{{ $item['price'] }}</td>
+                        <td>{{ $item['qty'] }}</td>
+                    </tr>
                 @endforeach
                 <tr>
-                    <td id="modal-cart-qty" colspan="4" align="right">Итого: {{ session('cart_qty') }}</td>
+                    <td colspan="3" align="right">Итого:</td>
+                    <td id="modal-cart-qty">{{ session('cart_qty') }}</td>
                 </tr>
                 <tr>
-                    <td id="modal-cart-total" colspan="4" align="right">На сумму: {{ session('cart_total') }}</td>
+                    <td colspan="3" align="right">На сумму:</td>
+                    <td id="modal-cart-total">@price_format(session('cart_total')) руб.</td>
                 </tr>
             </tbody>
         </table>

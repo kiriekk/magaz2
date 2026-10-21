@@ -23,11 +23,13 @@
                 <li class="nav-item">
                     <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart-modal">
                     Корзина <span class="badge badge-light">3</span>
-                </button> -->
+                    </button> -->
 
-                    <button id="cartBtn" data-url="{{ route('cart.show') }}" type="button" class="btn btn-primary">
-                        Корзина <span class="badge badge-light">3</span>
+                <li class="nav-item">
+                    <button onclick="getCart('{{ route('cart.show') }}')" type="button" class="btn btn-primary">
+                        Корзина <span class="badge badge-light mini-cart-qty">{{ session('cart_qty') ?? 0 }}</span>
                     </button>
+                </li>
 
                 </li>
             </ul>
