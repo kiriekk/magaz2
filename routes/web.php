@@ -25,4 +25,8 @@ Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name
 
 
 Route::get('/product/{slug}', [\App\Http\Controllers\ProductController::class,'show'])->name('products.show');
+
+Route::post('/cart/add', [\App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
+
+Route::post('/cart/show', [\App\Http\Controllers\CartController::class, 'show'])->name('cart.show');
 //Route::get('/', '\App\Http\Controllers\ProductController@index')->name('home');
