@@ -11,7 +11,12 @@ class CartController extends Controller
     public function add(Request $request) {
         $request->validate([
             'product_id' => 'required|integer',
-            'qty' => 'required|integer'
+            'qty' => [
+                'required',
+                'integer',
+                'min:1',
+                'regex:/^[1-9]\d*$/'
+            ]
         ]);
         $data = $request->all();
 
@@ -39,6 +44,14 @@ class CartController extends Controller
     public function delItem($product_id) {
         $cart = new Cart();
         $cart->delItem($product_id);
+        return view('cart.cart-modal');
+    }
+
+     public function clear()
+    {
+        session()->forget('cart');
+        session()->forget('cart_qty');
+        session()->forget('cart_total');
         return view('cart.cart-modal');
     }
 }

@@ -69,7 +69,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Оформить заказ</button>
+                <button type="button" class="btn btn-primary btn-cart @if(empty(session('cart'))) d-none @endif">Оформить заказ</button>
+                <button type="button" onclick="clearCart(' {{ route('cart.clear') }}')" class="btn btn-danger btn-cart @if(empty(session('cart'))) d-none @endif">Очистить корзину</button>
             </div>
         </div>
     </div>
