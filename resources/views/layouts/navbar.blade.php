@@ -12,19 +12,15 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.html">Главная <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{ route('home') }}">Главная <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Гитары</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Гитарное оборудование</a>
-                </li>
-                <li class="nav-item">
-                    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cart-modal">
-                    Корзина <span class="badge badge-light">3</span>
-                    </button> -->
-                </li>
+
+                @foreach ($categories as $category)
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('categories.show', ['slug' => $category->slug])}}">{{ $category->title }}</a>
+                    </li>
+                @endforeach
+
                 <li class="nav-item">
                     <button onclick="getCart('{{ route('cart.show') }}')" type="button" class="btn btn-primary">
                         Корзина <span class="badge badge-light mini-cart-qty">{{ session('cart_qty') ?? 0 }}</span>
@@ -43,6 +39,6 @@
     <script>
         document.getElementById('cartBtn').addEventListener('click', function() {
             let url = this.getAttribute('data-url');
-            getCart(url); 
+            getCart(url);
         });
     </script>
