@@ -21,12 +21,14 @@ use Illuminate\Support\Facades\Route;
     return view('index');
 });*/
 
-Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('home');
+//Route::get('/', '\App\Http\Controllers\ProductController@index')->name('home');
 
+Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('home');
 
 Route::get('/product/{slug}', [\App\Http\Controllers\ProductController::class,'show'])->name('products.show');
 
 Route::post('/cart/add', [\App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
 
-Route::post('/cart/show', [\App\Http\Controllers\CartController::class, 'show'])->name('cart.show');
-//Route::get('/', '\App\Http\Controllers\ProductController@index')->name('home');
+Route::get('/cart/del-item/{product_id}', [\App\Http\Controllers\CartController::class, 'delItem'])->name('cart.del_item');
+Route::get('/cart/show', [\App\Http\Controllers\CartController::class, 'show'])->name('cart.show');
+
