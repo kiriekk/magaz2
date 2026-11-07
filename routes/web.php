@@ -36,3 +36,5 @@ Route::get('/cart/show', [\App\Http\Controllers\CartController::class, 'show'])-
 
 Route::match(['get', 'post'], '/cart/checkout', [\App\Http\Controllers\CartController::class, 'checkout'])->name('cart.checkout');
 
+Route::get('/register', [\App\Http\Controllers\UserController::class, 'create'])->name('register.create');
+Route::post('/register', [\App\Http\Controllers\UserController::class, 'store'])->name('register.store');
