@@ -1,45 +1,50 @@
 function showCart(cart) {
-    $('#cart-modal .modal-body').html(cart);
-    $('#cart-modal').modal();
-    let cartQty = $('#modal-cart-qty').text() ? $('#modal-cart-qty').text() : 0;
-    $('.mini-cart-qty').text(cartQty);
+    $("#cart-modal .modal-body").html(cart);
+    $("#cart-modal").modal();
+    let cartQty = $("#modal-cart-qty").text() ? $("#modal-cart-qty").text() : 0;
+    $(".mini-cart-qty").text(cartQty);
 
     if (cartQty) {
-        $('#cart-modal .modal-footer button.btn-cart').removeClass('d-none');
+        $("#cart-modal .modal-footer btn-cart").removeClass("d-none");
     } else {
-        $('cart-modal .modal-footer button.btn-cart').addClass('d-none');
+        $("#cart-modal .modal-footer btn-cart").addClass("d-none");
     }
 }
 
 function clearCart(action) {
     $.ajax({
         url: action,
-        type: 'get',
+        type: "get",
         success: function (result) {
-            showCart(result);
+            let now_location = document.location.pathname;
+            if (now_location == "/cart/checkout") {
+                location = "/cart/checkout";
+            } else {
+                showCart(result);
+            }
         },
-        error: function() {
-            alert('Error');
-        }
+        error: function () {
+            alert("Error");
+        },
     });
 }
 
 function getCart(action) {
     $.ajax({
         url: action,
-        type: 'get',
+        type: "get",
         success: function (result) {
             showCart(result);
         },
-        error: function() {
-            alert('Error');
-        }
+        error: function () {
+            alert("Error");
+        },
     });
 }
 
-$(function() {
+$(function () {
     // Cart
-    $('.addtocart').on('submit', function () {
+    $(".addtocart").on("submit", function () {
         let form = $(this);
 
         let qtyInput = form.find('input[name="qty"]');
@@ -47,36 +52,43 @@ $(function() {
 
         if (!/^[1-9]\d*$/.test(qtyValue)) {
             alert(
-                "Пожалуйста, введите корректное количество (целое положительное число без нулевых в начале)!",
+                "Пожалуйста, введите корректное количество (целое положительное число без нулей в начале)!",
             );
+            qtyInput.focus();
+            return false;
         }
+
         $.ajax({
-            url: form.attr('action'),
+            url: form.attr("action"),
             data: form.serialize(),
-            type: 'post',
+            type: "post",
             success: function (result) {
-                // console.log(result);
                 showCart(result);
             },
             error: function (msg) {
-                alert('Error!');
+                alert("Error!");
                 console.log(msg.responseJSON);
                 form[0].reset();
-            }
+            },
         });
         return false;
     });
 
-    $('#cart-modal .modal-body').on('click', '.del-item', function() {
+    $("#cart-modal .modal-body").on("click", ".del-item", function () {
         $.ajax({
-            url: $(this).data('action'),
-            type: 'get',
+            url: $(this).data("action"),
+            type: "get",
             success: function (result) {
-                showCart(result);
+                let now_location = document.location.pathname;
+                if (now_location == "/cart/checkout") {
+                    location = "/cart/checkout";
+                } else {
+                    showCart(result);
+                }
             },
             error: function (msg) {
-                alert('Error!');
-            }
+                alert("Error!");
+            },
         });
     });
 });

@@ -17,7 +17,7 @@
 
                 @foreach ($categories as $category)
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('categories.show', ['slug' => $category->slug])}}">{{ $category->title }}</a>
+                        <a class="nav-link" href="{{ route('categories.single', ['slug' => $category->slug])}}">{{ $category->title }}</a>
                     </li>
                 @endforeach
 

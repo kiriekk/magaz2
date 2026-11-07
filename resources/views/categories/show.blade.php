@@ -16,13 +16,13 @@
                         @endif
                     </div>
                     <div class="card-thumb">
-                        <a href="{{ route('products.show', ['slug' => $product->slug]) }}">
+                        <a href="{{ route('products.single', ['slug' => $product->slug]) }}">
                             <img src="{{ $product->getImage() }}" alt="">
                         </a>
                     </div>
                     <div class="card-caption">
                         <div class="card-title">
-                            <a href="{{ route('products.show', ['slug' => $product->slug]) }}">{{ $product->title }}</a>
+                            <a href="{{ route('products.single', ['slug' => $product->slug]) }}">{{ $product->title }}</a>
                         </div>
                         <div class="card-price text-center">
                             @if ($product->old_price)

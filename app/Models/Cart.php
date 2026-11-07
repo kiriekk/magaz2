@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,15 +15,14 @@ class Cart extends Model
             session(["cart.{$product->id}.qty" => session("cart.{$product->id}.qty") + $qty]);
         } else {
             session(["cart.{$product->id}" => [
-                'id'    => $product->id,
+                'product_id' => $product->id,
                 'title' => $product->title,
-                'slug'  => $product->slug,
+                'slug' => $product->slug,
                 'price' => $product->price,
-                'img'   => $product->getImage(),
-                'qty'   => $qty,
+                'img' => $product->getImage(),
+                'qty' => $qty,
             ]]);
         }
-
         if (session()->has('cart_qty')) {
             session(['cart_qty' => session('cart_qty') + $qty]);
         } else {
@@ -38,7 +38,7 @@ class Cart extends Model
 
     public function delItem($product_id)
     {
-        if (!session()->has("cart.{$product_id}")) {
+        if(!session()->has("cart.{$product_id}")){
             return false;
         }
 
