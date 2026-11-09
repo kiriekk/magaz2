@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,23 +22,28 @@ use Illuminate\Support\Facades\Route;
     return view('index');
 });*/
 
+Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('home');
 //Route::get('/', '\App\Http\Controllers\ProductController@index')->name('home');
 
-Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('home');
+Route::get('/product/{slug}', [\App\Http\Controllers\ProductController::class, 'show'])->name('products.single');
+Route::get('/category/{slug}', [\App\Http\Controllers\CategoryController::class, 'show'])->name('categories.single');
 
-Route::get('/product/{slug}', [\App\Http\Controllers\ProductController::class,'show'])->name('products.single');
-
-Route::get('/category/{slug}', [\App\Http\Controllers\CategoryController::class,'show'])->name('categories.single');
 
 Route::post('/cart/add', [\App\Http\Controllers\CartController::class, 'add'])->name('cart.add');
-Route::get('/cart/del-item/{product_id}', [\App\Http\Controllers\CartController::class, 'delItem'])->name('cart.del_item');
-Route::get('/cart/clear', [\App\Http\Controllers\CartController::class, 'clear'])->name('cart.clear');
+
+
 Route::get('/cart/show', [\App\Http\Controllers\CartController::class, 'show'])->name('cart.show');
+
+Route::get('/cart/clear', [\App\Http\Controllers\CartController::class, 'clear'])->name('cart.clear');
+
+Route::get('/cart/del-item/{product_id}', [\App\Http\Controllers\CartController::class, 'delItem'])->name('cart.del_item');
+
 
 Route::match(['get', 'post'], '/cart/checkout', [\App\Http\Controllers\CartController::class, 'checkout'])->name('cart.checkout');
 
-Route::get('/register', [\App\Http\Controllers\UserController::class, 'create'])->name('register.create');
-Route::post('/register', [\App\Http\Controllers\UserController::class, 'store'])->name('register.store');
+
+// Route::get('/register', [\App\Http\Controllers\UserController::class, 'create'])->name('register.create');
+// Route::post('/register', [\App\Http\Controllers\UserController::class, 'store'])->name('register.store');
 
 Route::get('/login', [\App\Http\Controllers\UserController::class, 'loginForm'])->name('login.create');
 Route::post('/login', [\App\Http\Controllers\UserController::class, 'login'])->name('login');
@@ -45,8 +51,8 @@ Route::get('/logout', [\App\Http\Controllers\UserController::class, 'logout'])->
 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function(){
-    Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('admin.index');
-    Route::resource('products', (\App\Http\Controllers\ProductController::class));
+    Route::get('/', [ProductController::class, 'index'])->name('admin.index');
+    Route::resource('products', (ProductController::class));
     Route::resource('/categories', 'CategoryController');
     Route::resource('/tags', 'TagController');
     Route::resource('/posts', 'ProductController');
@@ -55,5 +61,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function(){
 
 Route::group(['middleware' => 'guest'], function(){
     Route::get('/register', [\App\Http\Controllers\UserController::class, 'create'])->name('register.create');
-    Route::get('/register', [\App\Http\Controllers\UserController::class, 'store'])->name('register.store');
+    Route::post('/register', [\App\Http\Controllers\UserController::class, 'store'])->name('register.store');
 });

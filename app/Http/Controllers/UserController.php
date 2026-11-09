@@ -23,7 +23,7 @@ class UserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->passsword),
+            'password' => bcrypt($request->password),
         ]);
 
         session()->flash('success', 'Регистрация пройдена');
@@ -51,7 +51,7 @@ class UserController extends Controller
             if(Auth::user()->is_admin){
                 return redirect()->route('admin.index');
             }else{
-                return redirect()->home();
+                return redirect()->route('home');
             }
         }
         return redirect()->back()->with('error', 'Incorrect login or password');

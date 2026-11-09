@@ -13,7 +13,7 @@
                 @endforeach
             </ul>
         </div>
-        @endif 
+        @endif
         @if (session()->has('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -35,11 +35,11 @@
                     @foreach(session('cart') as $item)
                         <tr>
                             <td>
-                                <a href="{{ route('products.show', ['slug' => $item['slug']]) }}">
+                                <a href="{{ route('products.single', ['slug' => $item['slug']]) }}">
                                     <img src="{{ $item['img'] }}" alt="{{ $item['title'] }}">
                                 </a>
                             </td>
-                            <td><a href="{{ route('products.show', ['slug' => $item['slug']]) }}">{{ $item['title'] }}</a></td>
+                            <td><a href="{{ route('products.single', ['slug' => $item['slug']]) }}">{{ $item['title'] }}</a></td>
                             <td>@price_format($item['price'])</td>
                             <td>{{ $item['qty'] }}</td>
                             <td>
@@ -61,7 +61,7 @@
                 </table>
             </div>
             <form method="post" action="{{ route('cart.checkout') }}">
-                @csrf 
+                @csrf
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" name="name" id="name" required>
@@ -84,7 +84,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-            @else 
+            @else
                 <h4>Корзина пуста</h4>
             @endif
     </div>
