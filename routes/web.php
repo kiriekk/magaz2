@@ -38,3 +38,22 @@ Route::match(['get', 'post'], '/cart/checkout', [\App\Http\Controllers\CartContr
 
 Route::get('/register', [\App\Http\Controllers\UserController::class, 'create'])->name('register.create');
 Route::post('/register', [\App\Http\Controllers\UserController::class, 'store'])->name('register.store');
+
+Route::get('/login', [\App\Http\Controllers\UserController::class, 'loginForm'])->name('login.create');
+Route::post('/login', [\App\Http\Controllers\UserController::class, 'login'])->name('login');
+Route::get('/logout', [\App\Http\Controllers\UserController::class, 'logout'])->name('logout');
+
+
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function(){
+    Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('admin.index');
+    Route::resource('products', (\App\Http\Controllers\ProductController::class));
+    Route::resource('/categories', 'CategoryController');
+    Route::resource('/tags', 'TagController');
+    Route::resource('/posts', 'ProductController');
+});
+
+
+Route::group(['middleware' => 'guest'], function(){
+    Route::get('/register', [\App\Http\Controllers\UserController::class, 'create'])->name('register.create');
+    Route::get('/register', [\App\Http\Controllers\UserController::class, 'store'])->name('register.store');
+});
